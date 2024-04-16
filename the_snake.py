@@ -28,28 +28,35 @@ clock = pygame.time.Clock()
 
 
 class GameObject:
+    """ None """
     def __init__(self, position=(0, 0)):
         self.position = position
         self.body_color = None
 
     def draw(self):
+        """ None """
         pass
 
 
 class Apple(GameObject):
+    """ None """
     def __init__(self):
         super().__init__(self)
         self.body_color = APPLE_COLOR
         self.randomize_position()
 
     def randomize_position(self):
-        self.position = (randint(0, SCREEN_WIDTH) * GRID_SIZE, randint(0, SCREEN_HEIGHT) * GRID_SIZE)
+        """ None """
+        self.position = (randint(0, SCREEN_WIDTH) * GRID_SIZE,
+                         randint(0, SCREEN_HEIGHT) * GRID_SIZE)
 
     def draw(self):
+        """ None """
         pass
 
 
 class Snake(GameObject):
+    """ None """
     def __init__(self):
         super().__init__(self)
         self.body_color = SNAKE_COLOR
@@ -58,26 +65,33 @@ class Snake(GameObject):
         self.next_direction = None
 
     def update_direction(self):
+        """ None """
         pass
 
     def move(self):
+        """ None """
         pass
 
     def draw(self):
+        """ None """
         pass
 
     def get_head_position(self):
+        """ None """
         pass
 
     def reset(self):
+        """ None """
         pass
 
 
 def handle_keys():
+    """ None """
     pass
 
 
 def main():
+    """ None """
     pygame.init()
 
     while True:
