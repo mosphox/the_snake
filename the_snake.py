@@ -66,6 +66,7 @@ class Snake(GameObject):
         self.length = 1
         self.direction = RIGHT
         self.next_direction = None
+        self.positions = []
 
     def update_direction(self):
         """None"""
