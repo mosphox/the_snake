@@ -1055,7 +1055,7 @@ class MenuAnimation:
         # Get proximity of all points in the object to mouse
         proximity = [(point,
                       sqrt((mouse[0] - point[0]) ** 2
-                     + (mouse[1] - point[1]) ** 2))
+                      + (mouse[1] - point[1]) ** 2))
                      for point in self.obj]
 
         # Get closest point, from here the animation will start
@@ -1190,12 +1190,12 @@ class MouseGlow:
         for tile in glowing_tiles:
             pygame.draw.rect(screen,
                              (0,
-                             max((200 - (tile[2] * self.fix)), 50),
-                             0),
+                              max((200 - (tile[2] * self.fix)), 50),
+                              0),
                              (tile[0] - 1,
-                             tile[1] - 1,
-                             GRID_SIZE + 1,
-                             GRID_SIZE + 1)
+                              tile[1] - 1,
+                              GRID_SIZE + 1,
+                              GRID_SIZE + 1)
                              )
 
             pygame.draw.rect(screen,
