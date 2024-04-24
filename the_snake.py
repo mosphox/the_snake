@@ -35,6 +35,7 @@ BOARD_BACKGROUND_COLOR = None
 BORDER_COLOR = None
 APPLE_COLOR = None
 SNAKE_COLOR = None
+GRID_WIDTH, GRID_HEIGHT = None, None
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 
@@ -2071,6 +2072,9 @@ class Engine:
         self.over.logo.draw(self.over.mouseglow.positions, self.iter_counter)
         self.over.hover(self.iter_counter, mouse)
 
+def handle_keys():
+    """For tests only."""
+    pass
 
 def main():
     """Main loop."""
