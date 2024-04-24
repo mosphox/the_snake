@@ -1055,7 +1055,7 @@ class MenuAnimation:
         # Get proximity of all points in the object to mouse
         proximity = [(point,
                       sqrt((mouse[0] - point[0]) ** 2
-                      + (mouse[1] - point[1]) ** 2))
+                     + (mouse[1] - point[1]) ** 2))
                      for point in self.obj]
 
         # Get closest point, from here the animation will start
@@ -1103,7 +1103,6 @@ class MenuText:
 
     def draw(self, highlight, iter_counter):
         """Draw text and animations on screen."""
-
         # Contains main text that is always on screen
         bits = self.logo_text + self.play_button + self.quit_button
 
@@ -1143,12 +1142,14 @@ class MenuText:
                            if animation.obj != anime]
 
     def stop_all(self):
+        """Remove all animations."""
         self.animations = []
 
 
 class MouseGlow:
     """Highlight tiles that are below the mouse.
-       Positions list of those tiles recreates with every frame."""
+    Positions list of those tiles recreates with every frame.
+    """
 
     def __init__(self):
         self.positions = []
@@ -1177,7 +1178,8 @@ class MouseGlow:
         # Remove tiles that are to far away from mouse.
         glowing_tiles = [tile for tile in tiles if tile[2] < 5 * GRID_SIZE]
 
-        # Get rid of proximity part, as this list will be used in other classes.
+        # Get rid of proximity part,
+        # as this list will be used in other classes.
         self.positions = [(item[0], item[1]) for item in glowing_tiles]
 
         if update_only:
@@ -1186,21 +1188,21 @@ class MouseGlow:
         # Draw tiles using proximity value, the closer tile
         # is to the mouse - the brighter is that tile
         for tile in glowing_tiles:
-            pygame.draw.rect(
-                             screen,
+            pygame.draw.rect(screen,
                              (0,
-                                    max((200 - (tile[2] * self.fix)), 50),
-                                    0),
+                             max((200 - (tile[2] * self.fix)), 50),
+                             0),
                              (tile[0] - 1,
-                                   tile[1] - 1,
-                                   GRID_SIZE + 1,
-                                   GRID_SIZE + 1))
+                             tile[1] - 1,
+                             GRID_SIZE + 1,
+                             GRID_SIZE + 1)
+                             )
 
             pygame.draw.rect(screen,
                              Colors.black,
                              (tile[0], tile[1],
-                                   GRID_SIZE - 1, GRID_SIZE - 1))
-
+                             GRID_SIZE - 1, GRID_SIZE - 1)
+                             )
 
 class Button:
     """Button. Invisible object on screen, defined as set of points."""
