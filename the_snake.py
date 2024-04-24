@@ -1283,12 +1283,14 @@ class Apple(GameObject):
         return choice([pos for pos in
                        [(x, y)
                         for x in range(0, SCREEN_WIDTH, GRID_SIZE)
-                        for y in range(7*GRID_SIZE, SCREEN_HEIGHT, GRID_SIZE)]
+                        for y in range(7 * GRID_SIZE,
+                                       SCREEN_HEIGHT, GRID_SIZE)]
                        if pos not in snake_positions])
 
     def update(self, snake_positions):
         """Check if the snake's head is colliding with apple.
-        If so, get new position for an apple and return True for snake."""
+        If so, get new position for an apple and return True for snake.
+        """
         if self.position in snake_positions:
             self.position = self.randomize_position(snake_positions)
             self.draw()
@@ -1314,7 +1316,8 @@ class Apple(GameObject):
 
 class Snake(GameObject):
     """The snake itself. Handles movement logic as well as the
-       rendering part and movement animations."""
+    rendering part and movement animations.
+    """
 
     def __init__(self):
         super().__init__(self)
@@ -1334,7 +1337,6 @@ class Snake(GameObject):
 
     def update_direction(self, direction):
         """Define a new direction for a snake to move."""
-
         # Get our current direction.
         # As there is a direction queue, get the last direction from it.
         # If the queue is empty, get current direction.
@@ -1347,7 +1349,7 @@ class Snake(GameObject):
 
         # Check if we aren't going the opposite way.
         if (abs(facing[0]) == abs(direction[0]) or abs(facing[1])
-            == abs(direction[1])):
+           == abs(direction[1])):
             return
 
         # If directions queue isn't too large, append new direction to it.
@@ -1356,7 +1358,6 @@ class Snake(GameObject):
 
     def move(self, apple_feast):
         """Move the snake in a given direction."""
-
         # If there is something in queue, get the first item.
         # First in first out queue, btw.
         if self.next_direction:
@@ -1366,8 +1367,8 @@ class Snake(GameObject):
         head = (((self.positions[0][0] + self.direction[0]) % SCREEN_WIDTH,
                  SCREEN_HEIGHT - GRID_SIZE)
                 if self.positions[0][1] + self.direction[1] < 7 * GRID_SIZE
-                else ((self.positions[0][0] +
-                       self.direction[0]) % SCREEN_WIDTH, 7 * GRID_SIZE)
+                else ((self.positions[0][0]
+                       + self.direction[0]) % SCREEN_WIDTH, 7 * GRID_SIZE)
         if self.positions[0][1] + self.direction[1] > SCREEN_HEIGHT - GRID_SIZE
         else ((self.positions[0][0] + self.direction[0]) % SCREEN_WIDTH,
               self.positions[0][1] + self.direction[1]))
