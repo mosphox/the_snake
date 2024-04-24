@@ -1214,7 +1214,7 @@ class Button:
     def hover(self, mouse):
         """Check if the mouse is over button"""
         if (self.from_point[0] < mouse[0] < self.to_point[0]
-           and self.from_point[1] < mouse[1] < self.to_point[1]):
+                and self.from_point[1] < mouse[1] < self.to_point[1]):
             return True
 
         return False
@@ -1349,7 +1349,7 @@ class Snake(GameObject):
 
         # Check if we aren't going the opposite way.
         if (abs(facing[0]) == abs(direction[0]) or abs(facing[1])
-           == abs(direction[1])):
+                == abs(direction[1])):
             return
 
         # If directions queue isn't too large, append new direction to it.
@@ -1369,11 +1369,11 @@ class Snake(GameObject):
                 if self.positions[0][1] + self.direction[1] < 7 * GRID_SIZE
                 else ((self.positions[0][0]
                        + self.direction[0]) % SCREEN_WIDTH, 7 * GRID_SIZE)
-                if self.positions[0][1] + self.direction[1]
-                > SCREEN_HEIGHT - GRID_SIZE
-                else ((self.positions[0][0] + self.direction[0])
-                      % SCREEN_WIDTH,
-                      self.positions[0][1] + self.direction[1]))
+        if self.positions[0][1] + self.direction[1]
+           > SCREEN_HEIGHT - GRID_SIZE
+        else ((self.positions[0][0] + self.direction[0])
+              % SCREEN_WIDTH,
+              self.positions[0][1] + self.direction[1]))
 
         # Update positions list. Keep last tile if the snake ate an apple.
         # Else remove it. (tile, not apple).
@@ -1415,14 +1415,14 @@ class Snake(GameObject):
                     # Create 2 ghost tiles: one moving inside the boarder,
                     # another moving outside from opposite side.
                     positions = [(self.positions[i],
-                                 (SCREEN_WIDTH, self.positions[i][1])),
+                                  (SCREEN_WIDTH, self.positions[i][1])),
                                  ((-20, self.positions[i][1]),
                                   self.positions[i + 1])]
 
                 # If tile is moving outside right boarder:
                 else:
                     positions = [(self.positions[i],
-                                 (-20, self.positions[i][1])),
+                                  (-20, self.positions[i][1])),
                                  ((SCREEN_WIDTH, self.positions[i][1]),
                                   self.positions[i + 1])]
 
@@ -1433,14 +1433,14 @@ class Snake(GameObject):
                 # If tile is moving outside top boarder:
                 if self.positions[i][1] - self.positions[i + 1][1] > 0:
                     positions = [(self.positions[i],
-                                 (self.positions[i][0], SCREEN_HEIGHT)),
+                                  (self.positions[i][0], SCREEN_HEIGHT)),
                                  ((self.positions[i][0], GRID_SIZE * 6),
                                   self.positions[i + 1])]
 
                 # If tile is moving outside bottom boarder:
                 else:
                     positions = [(self.positions[i],
-                                 (self.positions[i][0], GRID_SIZE * 6)),
+                                  (self.positions[i][0], GRID_SIZE * 6)),
                                  ((self.positions[i][0], SCREEN_HEIGHT),
                                   self.positions[i + 1])]
 
@@ -1852,6 +1852,76 @@ class Engine:
         self.cover_all.fill(Colors.black)
         self.cover_score.fill(Colors.black)
 
+    def handle_keys_mouse(self, mouse):
+        """None"""
+        # Get menu button clicks.
+        if self.screen == 'menu':
+            self.screen = self.menu.click(mouse)
+
+            if self.screen == 'game':
+                # Restart game, if play in menu has been selected.
+                self.game = Game()
+
+            if self.screen == 'quit':
+                # Return true, to exit main loop
+                return True
+
+        if self.screen == 'pause':
+            self.screen = self.pause.click(mouse)
+
+            if self.screen == 'game':
+                # Set game to active, if the game was unpaused.
+                self.game.active = True
+
+        if self.screen == 'over':
+            self.screen = self.over.click(mouse)
+
+            if self.screen == 'game':
+                self.over.logo.stop_all()
+                # Restart game, if retry was selected.
+                self.game = Game()
+
+    def handle_keys_keydown(self, event):
+        """None"""
+        if event.key == pygame.K_ESCAPE:
+            if self.screen == 'game':
+                # Set game to inactive, if the game was paused.
+                self.game.active = False
+                self.screen = 'pause'
+                self.pause.logo.stop_all()
+                continue
+
+            if self.screen == 'pause':
+                # Set game to active, if the game was unpaused.
+                self.game.active = True
+                self.screen = 'game'
+
+        # Move the snake around.
+        if event.key == pygame.K_w:
+            if self.screen == 'game':
+                self.game.snake.update_direction(UP)
+        if event.key == pygame.K_s:
+            if self.screen == 'game':
+                self.game.snake.update_direction(DOWN)
+        if event.key == pygame.K_d:
+            if self.screen == 'game':
+                self.game.snake.update_direction(RIGHT)
+        if event.key == pygame.K_a:
+            if self.screen == 'game':
+                self.game.snake.update_direction(LEFT)
+
+        if event.key == pygame.K_SPACE:
+            # Speed up the game when SPACE is pressed.
+            if self.screen == 'game':
+                self.game.update_rate = self.game.update_rate // 2
+
+    def handle_keys_keyup(self, event):
+        """None"""
+        if event.key == pygame.K_SPACE:
+            # Slow down the game when SPACE is released.
+            if self.screen == 'game':
+                self.game.update_rate = self.game.update_rate * 2
+
     def handle_keys(self):
         """Get keys pressed and send actions to other game parts."""
         mouse = pygame.mouse.get_pos()
@@ -1863,71 +1933,13 @@ class Engine:
                 raise SystemExit
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # Get menu button clicks.
-                if self.screen == 'menu':
-                    self.screen = self.menu.click(mouse)
-
-                    if self.screen == 'game':
-                        # Restart game, if play in menu has been selected.
-                        self.game = Game()
-
-                    if self.screen == 'quit':
-                        # Return true, to exit main loop
-                        return True
-
-                if self.screen == 'pause':
-                    self.screen = self.pause.click(mouse)
-
-                    if self.screen == 'game':
-                        # Set game to active, if the game was unpaused.
-                        self.game.active = True
-
-                if self.screen == 'over':
-                    self.screen = self.over.click(mouse)
-
-                    if self.screen == 'game':
-                        self.over.logo.stop_all()
-                        # Restart game, if retry was selected.
-                        self.game = Game()
+                self.handle_keys_mouse(mouse)
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    if self.screen == 'game':
-                        # Set game to inactive, if the game was paused.
-                        self.game.active = False
-                        self.screen = 'pause'
-                        self.pause.logo.stop_all()
-                        continue
-
-                    if self.screen == 'pause':
-                        # Set game to active, if the game was unpaused.
-                        self.game.active = True
-                        self.screen = 'game'
-
-                # Move the snake around.
-                if event.key == pygame.K_w:
-                    if self.screen == 'game':
-                        self.game.snake.update_direction(UP)
-                if event.key == pygame.K_s:
-                    if self.screen == 'game':
-                        self.game.snake.update_direction(DOWN)
-                if event.key == pygame.K_d:
-                    if self.screen == 'game':
-                        self.game.snake.update_direction(RIGHT)
-                if event.key == pygame.K_a:
-                    if self.screen == 'game':
-                        self.game.snake.update_direction(LEFT)
-
-                if event.key == pygame.K_SPACE:
-                    # Speed up the game when SPACE is pressed.
-                    if self.screen == 'game':
-                        self.game.update_rate = self.game.update_rate // 2
+                self.handle_keys_keydown(event)
 
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_SPACE:
-                    # Slow down the game when SPACE is released.
-                    if self.screen == 'game':
-                        self.game.update_rate = self.game.update_rate * 2
+                self.handle_keys_keyup(event)
 
         return False
 
