@@ -999,10 +999,12 @@ class Bit:
             current_index = Colors.logo_anime.index(self.color)
 
             if current_index >= len(Colors.logo_anime) - abs(self.direction):
-                # If current index is higher than number of colors in list - change direction.
+                # If current index is higher than number of colors in list
+                # - change direction.
                 self.direction = -abs(self.direction)
             elif current_index <= abs(self.direction) - 1:
-                # If current index is lower than minimum color - change direction.
+                # If current index is lower than minimum color
+                # - change direction.
                 self.direction = abs(self.direction)
             else:
                 pass
@@ -1010,14 +1012,29 @@ class Bit:
             # Change color by incrementing index.
             self.color = Colors.logo_anime[current_index + self.direction]
 
-        # If tile is filled, the inside color = boarder color. Else default inside color
+        # If tile is filled, the inside color = boarder color.
+        # Else default inside color
         # Which tiles are filled described in positions variable
-        inside_color = self.color if self.point in positions else Colors.tile_inside_color
+        inside_color = (self.color if self.point in positions
+                        else Colors.tile_inside_color)
 
         # Draw boarder tile, then inside tile on top.
         # The inside tile is smaller, to make boarder visible.
-        pygame.draw.rect(screen, self.color, (self.point[0] - 1, self.point[1] - 1, GRID_SIZE + 1, GRID_SIZE + 1))
-        pygame.draw.rect(screen, inside_color, (self.point[0], self.point[1], GRID_SIZE - 1, GRID_SIZE - 1))
+        pygame.draw.rect(screen,
+                         self.color,
+                         (self.point[0] - 1,
+                          self.point[1] - 1,
+                          GRID_SIZE + 1,
+                          GRID_SIZE + 1)
+                         )
+        pygame.draw.rect(
+                         screen,
+                         inside_color,
+                         (self.point[0],
+                          self.point[1],
+                          GRID_SIZE - 1,
+                          GRID_SIZE - 1)
+                        )
 
 
 class MenuAnimation:
@@ -1036,20 +1053,24 @@ class MenuAnimation:
     def get_proximity(self, mouse):
         """Calculating values used in animation."""
         # Get proximity of all points in the object to mouse
-        proximity = [(point, sqrt((mouse[0] - point[0]) ** 2 + (mouse[1] - point[1]) ** 2)) for point in self.obj]
+        proximity = [(point,
+                      sqrt((mouse[0] - point[0]) ** 2 +
+                           (mouse[1] - point[1]) ** 2)) for point in self.obj]
 
         # Get closest point, from here the animation will start
         initial = min([point[1] for point in proximity])
 
         # The difference between the closest and the farthest point.
-        # Actually describes how big is the difference between previous and current frame
+        # Actually describes how big is the difference between
+        # previous and current frame
         delta = max([point[1] for point in proximity]) - initial
 
         return proximity, initial, delta
 
     def update(self, iter_counter):
         """Get the next step of animation."""
-        # Calculate the fraction, from 0 to 1, this is current stage of animation in percents.
+        # Calculate the fraction, from 0 to 1, this is current
+        # stage of animation in percents.
         progress = (iter_counter - self.start) / self.stop + 0.3
 
         if progress > 1:
@@ -1057,7 +1078,8 @@ class MenuAnimation:
             return [apoint[0] for apoint in self.proximity]
 
         # Else return only tiles which should be filled.
-        return [apoint[0] for apoint in self.proximity if apoint[1] <= self.initial + self.delta * progress]
+        return [apoint[0] for apoint in self.proximity
+                if apoint[1] <= self.initial + self.delta * progress]
 
 
 class MenuText:
@@ -1102,7 +1124,9 @@ class MenuText:
             bit.draw(highlight)
 
     def start_animation(self, anime, from_, _to, mouse):
-        """Add new animation to text on the button if mouse is over the button."""
+        """Add new animation to text on the button
+        if mouse is over the button.
+        """
         # Check if an animation already exists.
         if anime in self.animations:
             return
@@ -1111,8 +1135,11 @@ class MenuText:
         self.animations.append(MenuAnimation(anime, from_, _to, mouse))
 
     def stop_animation(self, anime):
-        """Remove animation from the list if mouse is no longer over the button."""
-        self.animations = [animation for animation in self.animations if animation.obj != anime]
+        """Remove animation from the list
+        if mouse is no longer over the button.
+        """
+        self.animations = [animation for animation in self.animations
+                           if animation.obj != anime]
 
     def stop_all(self):
         self.animations = []
@@ -1155,11 +1182,23 @@ class MouseGlow:
         if update_only:
             return
 
-        # Draw tiles using proximity value, the closer tile is to the mouse - the brighter is that tile
+        # Draw tiles using proximity value, the closer tile
+        # is to the mouse - the brighter is that tile
         for tile in glowing_tiles:
-            pygame.draw.rect(screen, (0, max((200 - (tile[2] * self.fix)), 50), 0),
-                             (tile[0] - 1, tile[1] - 1, GRID_SIZE + 1, GRID_SIZE + 1))
-            pygame.draw.rect(screen, (0, 0, 0), (tile[0], tile[1], GRID_SIZE - 1, GRID_SIZE - 1))
+            pygame.draw.rect(
+                             screen,
+                             (0,
+                                    max((200 - (tile[2] * self.fix)), 50),
+                                    0),
+                             (tile[0] - 1,
+                                   tile[1] - 1,
+                                   GRID_SIZE + 1,
+                                   GRID_SIZE + 1))
+
+            pygame.draw.rect(screen,
+                             Colors.black,
+                             (tile[0], tile[1],
+                                   GRID_SIZE - 1, GRID_SIZE - 1))
 
 
 class Button:
@@ -1170,7 +1209,8 @@ class Button:
 
     def hover(self, mouse):
         """Check if the mouse is over button"""
-        if self.from_point[0] < mouse[0] < self.to_point[0] and self.from_point[1] < mouse[1] < self.to_point[1]:
+        if (self.from_point[0] < mouse[0] < self.to_point[0] and
+            self.from_point[1] < mouse[1] < self.to_point[1]):
             return True
 
         return False
@@ -1217,7 +1257,7 @@ class Menu:
             return self.change_mode('quit')
 
     @staticmethod
-    def change_mode(self, mode):
+    def change_mode(mode):
         """Return game mode"""
         return mode
 
@@ -1237,7 +1277,7 @@ class Apple(GameObject):
         return choice([pos for pos in
                        [(x, y)
                         for x in range(0, SCREEN_WIDTH, GRID_SIZE)
-                        for y in range(7 * GRID_SIZE, SCREEN_HEIGHT, GRID_SIZE)]
+                        for y in range(7*GRID_SIZE, SCREEN_HEIGHT, GRID_SIZE)]
                        if pos not in snake_positions])
 
     def update(self, snake_positions):
@@ -1292,13 +1332,16 @@ class Snake(GameObject):
         # Get our current direction.
         # As there is a direction queue, get the last direction from it.
         # If the queue is empty, get current direction.
-        facing = self.next_direction[-1] if self.next_direction else self.direction
+        facing = (self.next_direction[-1] if self.next_direction
+                  else self.direction)
         # This actually allows the snake to turn around without lag.
-        # E.g: [LEFT, DOWN] in queue will make the snake take a left turn firstly.
+        # E.g: [LEFT, DOWN] in queue will make
+        # the snake take a left turn firstly.
         # And then turn down.
 
         # Check if we aren't going the opposite way.
-        if abs(facing[0]) == abs(direction[0]) or abs(facing[1]) == abs(direction[1]):
+        if (abs(facing[0]) == abs(direction[0]) or abs(facing[1])
+            == abs(direction[1])):
             return
 
         # If directions queue isn't too large, append new direction to it.
@@ -1317,7 +1360,8 @@ class Snake(GameObject):
         head = (((self.positions[0][0] + self.direction[0]) % SCREEN_WIDTH,
                  SCREEN_HEIGHT - GRID_SIZE)
                 if self.positions[0][1] + self.direction[1] < 7 * GRID_SIZE
-                else ((self.positions[0][0] + self.direction[0]) % SCREEN_WIDTH, 7 * GRID_SIZE)
+                else ((self.positions[0][0] +
+                       self.direction[0]) % SCREEN_WIDTH, 7 * GRID_SIZE)
         if self.positions[0][1] + self.direction[1] > SCREEN_HEIGHT - GRID_SIZE
         else ((self.positions[0][0] + self.direction[0]) % SCREEN_WIDTH,
               self.positions[0][1] + self.direction[1]))
@@ -1327,15 +1371,20 @@ class Snake(GameObject):
         if head in self.positions[:-2]:
             return True
 
-        self.positions = [head] + self.positions if apple_feast else [head] + self.positions[:-1]
+        self.positions = ([head] + self.positions if apple_feast
+                          else [head] + self.positions[:-1])
 
     def draw(self, jump):
-        """Draw snake animation. Stage of animation depends on a frame counter 'jump'."""
+        """Draw snake animation. Stage of animation depends on a
+        frame counter 'jump'.
+        """
 
-        # Range is reversed, cause head should be drawn last, in order to appear on top.
+        # Range is reversed, cause head should be drawn last,
+        # in order to appear on top.
         for i in reversed(range(len(self.positions) - 2)):
 
-            # Check if moving tile is at the corner + ignore last 2 tiles as they are not rendered.
+            # Check if moving tile is at the corner + ignore last 2 tiles
+            # as they are not rendered.
             if (self.positions[i][0] - self.positions[i + 2][0] != 0 and
                     self.positions[i][1] - self.positions[i + 2][1] != 0 and
                     i + 3 != len(self.positions)):
@@ -1349,49 +1398,63 @@ class Snake(GameObject):
                                  )
 
             # Check if tile is moving outside of screen on X axis.
-            if abs(self.positions[i][0] - self.positions[i + 1][0]) == SCREEN_WIDTH - GRID_SIZE:
+            if (abs(self.positions[i][0] - self.positions[i + 1][0])
+                    == SCREEN_WIDTH - GRID_SIZE):
 
                 # If tile is moving outside left boarder:
                 if self.positions[i][0] - self.positions[i + 1][0] > 0:
 
                     # Create 2 ghost tiles: one moving inside the boarder,
                     # another moving outside from opposite side.
-                    positions = [(self.positions[i], (SCREEN_WIDTH, self.positions[i][1])),
-                                 ((-20, self.positions[i][1]), self.positions[i + 1])]
+                    positions = [(self.positions[i],
+                                 (SCREEN_WIDTH, self.positions[i][1])),
+                                 ((-20, self.positions[i][1]),
+                                  self.positions[i + 1])]
 
                 # If tile is moving outside right boarder:
                 else:
-                    positions = [(self.positions[i], (-20, self.positions[i][1])),
-                                 ((SCREEN_WIDTH, self.positions[i][1]), self.positions[i + 1])]
+                    positions = [(self.positions[i],
+                                 (-20, self.positions[i][1])),
+                                 ((SCREEN_WIDTH, self.positions[i][1]),
+                                  self.positions[i + 1])]
 
             # Check if tile is moving outside of screen on Y axis.
-            elif abs(self.positions[i][1] - self.positions[i + 1][1]) == SCREEN_HEIGHT - GRID_SIZE - (7 * GRID_SIZE):
+            elif (abs(self.positions[i][1] - self.positions[i + 1][1]) ==
+                  SCREEN_HEIGHT - GRID_SIZE - (7 * GRID_SIZE)):
 
                 # If tile is moving outside top boarder:
                 if self.positions[i][1] - self.positions[i + 1][1] > 0:
-                    positions = [(self.positions[i], (self.positions[i][0], SCREEN_HEIGHT)),
-                                 ((self.positions[i][0], GRID_SIZE * 6), self.positions[i + 1])]
+                    positions = [(self.positions[i],
+                                 (self.positions[i][0], SCREEN_HEIGHT)),
+                                 ((self.positions[i][0], GRID_SIZE * 6),
+                                  self.positions[i + 1])]
 
                 # If tile is moving outside bottom boarder:
                 else:
-                    positions = [(self.positions[i], (self.positions[i][0], GRID_SIZE * 6)),
-                                 ((self.positions[i][0], SCREEN_HEIGHT), self.positions[i + 1])]
+                    positions = [(self.positions[i],
+                                 (self.positions[i][0], GRID_SIZE * 6)),
+                                 ((self.positions[i][0], SCREEN_HEIGHT),
+                                  self.positions[i + 1])]
 
             # If tile is moving on screen, no boarders stuff:
             else:
-                # Set to positions: where the tile was before and where the tile should appear.
+                # Set to positions: where the tile was before and where
+                # the tile should appear.
                 positions = [(self.positions[i], self.positions[i + 1])]
 
             # Change color to snake head color, if i = 0, as i = 0 is a head.
             color = Colors.snake if i else Colors.snake_head
 
             for position in positions:
-                # For every position in list draw animation based on animation stage.
+                # For every position in list draw
+                # animation based on animation stage.
                 pygame.draw.rect(
                     screen,
                     color,
-                    (((position[0][0] - position[1][0]) * min((jump + 1) / 6, 1)) + position[1][0],
-                     ((position[0][1] - position[1][1]) * min((jump + 1) / 6, 1)) + position[1][1],
+                    (((position[0][0] - position[1][0])
+                            * min((jump + 1) / 6, 1)) + position[1][0],
+                     ((position[0][1] - position[1][1])
+                       * min((jump + 1) / 6, 1)) + position[1][1],
                      GRID_SIZE - 1,
                      GRID_SIZE - 1)
                 )
@@ -1400,17 +1463,23 @@ class Snake(GameObject):
         return jump + 1
 
     def get_head_position(self):
-        """Idk what this method is needed for, as we always know where the head is"""
+        """Idk what this method is needed for,
+        as we always know where the head is.
+        """
         pass
 
     def reset(self):
-        """Won't be used, as new instance of snake is created to reset the game"""
+        """Won't be used, as new instance of snake
+        is created to reset the game.
+        """
         pass
 
 
 class Particle(GameObject):
-    """Particle. Used in some animations. Has its own position, size and velocity.
-       Dies over certain period of time."""
+    """Particle. Used in some animations. Has its own position,
+    size and velocity.
+    Dies over certain period of time.
+    """
 
     def __init__(self, pos, preset):
         self.position = vec(pos[0] + GRID_SIZE // 2, pos[1] + GRID_SIZE // 2)
@@ -1420,7 +1489,8 @@ class Particle(GameObject):
 
         # The time period in pygame ticks.
         # (Not iter_counter used in several other animations).
-        # If lifetime has expired, particle will be removed from rendering lists.
+        # If lifetime has expired, particle will be removed
+        # from rendering lists.
         self.lifetime = preset[3]
 
         # The time when particle was created (also in pygame ticks).
@@ -1434,7 +1504,8 @@ class Particle(GameObject):
            Make particle smaller, more time it lives - the smaller it gets."""
 
         # Check if the particle is still alive.
-        self.alive = max(1 - ((pygame.time.get_ticks() - self.timestamp) / self.lifetime), 0)
+        self.alive = max(1 - ((pygame.time.get_ticks() - self.timestamp)
+                              / self.lifetime), 0)
 
         # If so, update its size and position.
         if self.alive:
@@ -1880,7 +1951,8 @@ class Engine:
         # Draw a grid on the background
         self.menu.grid.draw()
 
-        # If mouse is somewhere on the screen, highlight tiles that located below the mouse.
+        # If mouse is somewhere on the screen, highlight tiles
+        # that located below the mouse.
         self.menu.mouseglow.draw(mouse)
 
         # Draw menu elements, buttons and title
@@ -1900,8 +1972,10 @@ class Engine:
             # Check if snake ate the apple.
             if apple_eaten:
                 # If so, create particle animation for a new apple.
-                self.game.animation.third_layer += [Particle(self.game.apple.position, ParticlePresets.apple()) for i in
-                                                    range(30)]
+                particles = [Particle(self.game.apple.position,
+                                      ParticlePresets.apple())
+                                      for i in range(30)]
+                self.game.animation.third_layer += particles
 
             # Check if snake bit its own tail.
             if self.game.snake.move(apple_eaten):
