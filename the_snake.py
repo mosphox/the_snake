@@ -984,7 +984,7 @@ class Bit:
         self.color = choice(color_set)
         self.change_colors = change_colors
 
-        # Direction in which tile is moving around it's colors list
+        # Direction in which tile is moving around its colors list
         # Positive / negative - movement forward or backward.
         # The number itself - step or increment
         self.direction = 3
@@ -1058,7 +1058,7 @@ class MenuAnimation:
                            + (mouse[1] - point[1]) ** 2))
                      for point in self.obj]
 
-        # Get closest point, from here the animation will start
+        # Get the closest point, from here the animation will start
         initial = min([point[1] for point in proximity])
 
         # The difference between the closest and the farthest point.
@@ -1175,7 +1175,7 @@ class MouseGlow:
                  for x in range(0, SCREEN_WIDTH, GRID_SIZE)
                  for y in range(0, SCREEN_HEIGHT, GRID_SIZE)]
 
-        # Remove tiles that are to far away from mouse.
+        # Remove tiles that are too far away from mouse.
         glowing_tiles = [tile for tile in tiles if tile[2] < 5 * GRID_SIZE]
 
         # Get rid of proximity part,
@@ -1864,48 +1864,32 @@ class Engine:
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    if self.screen == 'game':
-                        # Set game to inactive, if the game was paused.
-                        self.game.active = False
-                        self.screen = 'pause'
-                        self.pause.logo.stop_all()
-                        continue
-
-                    if self.screen == 'pause':
-                        # Set game to active, if the game was unpaused.
-                        self.game.active = True
-                        self.screen = 'game'
+                    pass
 
                 # Move the snake around.
                 if event.key == pygame.K_w:
-                    if self.screen == 'game':
-                        self.game.snake.update_direction(UP)
+                    self.game.snake.update_direction(UP)
                 if event.key == pygame.K_s:
-                    if self.screen == 'game':
-                        self.game.snake.update_direction(DOWN)
+                    self.game.snake.update_direction(DOWN)
                 if event.key == pygame.K_d:
-                    if self.screen == 'game':
-                        self.game.snake.update_direction(RIGHT)
+                    self.game.snake.update_direction(RIGHT)
                 if event.key == pygame.K_a:
-                    if self.screen == 'game':
-                        self.game.snake.update_direction(LEFT)
+                    self.game.snake.update_direction(LEFT)
 
                 if event.key == pygame.K_SPACE:
                     # Speed up the game when SPACE is pressed.
-                    if self.screen == 'game':
-                        self.game.update_rate = self.game.update_rate // 2
+                    self.game.update_rate = self.game.update_rate // 2
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE:
                     # Slow down the game when SPACE is released.
-                    if self.screen == 'game':
-                        self.game.update_rate = self.game.update_rate * 2
+                    self.game.update_rate = self.game.update_rate * 2
 
         return False
 
     def render(self):
         """Select screen to render, based on current mode."""
-        responce = self.handle_keys()
+        response = self.handle_keys()
 
         if self.screen == 'menu':
             self.render_menu()
@@ -1920,7 +1904,7 @@ class Engine:
 
         self.iter_counter += 1
 
-        return responce
+        return response
 
     def render_menu(self):
         """Render menu screen."""
