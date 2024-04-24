@@ -1027,8 +1027,7 @@ class Bit:
                           GRID_SIZE + 1,
                           GRID_SIZE + 1)
                          )
-        pygame.draw.rect(
-                         screen,
+        pygame.draw.rect(screen,
                          inside_color,
                          (self.point[0],
                           self.point[1],
@@ -1039,7 +1038,8 @@ class Bit:
 
 class MenuAnimation:
     """Used to smoothly fill the text on the button with color
-       if mouse is over this button."""
+    if mouse is over this button.
+    """
 
     def __init__(self, obj, from_, _to, mouse):
         # 'Object' - text on screen. Set of points, representing this object
@@ -1054,8 +1054,9 @@ class MenuAnimation:
         """Calculating values used in animation."""
         # Get proximity of all points in the object to mouse
         proximity = [(point,
-                      sqrt((mouse[0] - point[0]) ** 2 +
-                           (mouse[1] - point[1]) ** 2)) for point in self.obj]
+                      sqrt((mouse[0] - point[0]) ** 2
+                           + (mouse[1] - point[1]) ** 2))
+                      for point in self.obj]
 
         # Get closest point, from here the animation will start
         initial = min([point[1] for point in proximity])
