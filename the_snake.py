@@ -8,7 +8,6 @@ from random import randint, choice, uniform
 try:
     # Try to set high-res. Works on Windows 10-11
     ctypes.windll.shcore.SetProcessDpiAwareness(True)
-    pass
 
 except AttributeError:
     pass
@@ -2072,9 +2071,11 @@ class Engine:
         self.over.logo.draw(self.over.mouseglow.positions, self.iter_counter)
         self.over.hover(self.iter_counter, mouse)
 
+
 def handle_keys():
     """For tests only."""
     pass
+
 
 def main():
     """Main loop."""
