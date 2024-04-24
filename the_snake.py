@@ -1882,7 +1882,7 @@ class Engine:
                 self.game = Game()
 
     def handle_keys_keydown(self, event):
-        """None"""
+        """Just a method to make handle_keys less complex :)"""
         if event.key == pygame.K_ESCAPE:
             if self.screen == 'game':
                 # Set game to inactive, if the game was paused.
@@ -1914,7 +1914,7 @@ class Engine:
                 self.game.update_rate = self.game.update_rate // 2
 
     def handle_keys_keyup(self, event):
-        """None"""
+        """Just a method to make handle_keys less complex :)"""
         if event.key == pygame.K_SPACE:
             # Slow down the game when SPACE is released.
             if self.screen == 'game':
