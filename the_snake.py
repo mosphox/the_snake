@@ -1370,7 +1370,7 @@ class Snake(GameObject):
                 else ((self.positions[0][0]
                        + self.direction[0]) % SCREEN_WIDTH, 7 * GRID_SIZE)
                 if self.positions[0][1] + self.direction[1]
-                   > SCREEN_HEIGHT - GRID_SIZE
+                > SCREEN_HEIGHT - GRID_SIZE
                 else ((self.positions[0][0] + self.direction[0])
                       % SCREEN_WIDTH,
                       self.positions[0][1] + self.direction[1]))
@@ -1387,16 +1387,15 @@ class Snake(GameObject):
         """Draw snake animation. Stage of animation depends on a
         frame counter 'jump'.
         """
-
         # Range is reversed, cause head should be drawn last,
         # in order to appear on top.
         for i in reversed(range(len(self.positions) - 2)):
 
             # Check if moving tile is at the corner + ignore last 2 tiles
             # as they are not rendered.
-            if (self.positions[i][0] - self.positions[i + 2][0] != 0 and
-                    self.positions[i][1] - self.positions[i + 2][1] != 0 and
-                    i + 3 != len(self.positions)):
+            if (self.positions[i][0] - self.positions[i + 2][0] != 0
+                    and self.positions[i][1] - self.positions[i + 2][1] != 0
+                    and i + 3 != len(self.positions)):
                 # If so, draw a ghost tile that should cover ugly animations :)
                 pygame.draw.rect(screen,
                                  Colors.snake,
@@ -1428,8 +1427,8 @@ class Snake(GameObject):
                                   self.positions[i + 1])]
 
             # Check if tile is moving outside of screen on Y axis.
-            elif (abs(self.positions[i][1] - self.positions[i + 1][1]) ==
-                  SCREEN_HEIGHT - GRID_SIZE - (7 * GRID_SIZE)):
+            elif (abs(self.positions[i][1] - self.positions[i + 1][1])
+                  == SCREEN_HEIGHT - GRID_SIZE - (7 * GRID_SIZE)):
 
                 # If tile is moving outside top boarder:
                 if self.positions[i][1] - self.positions[i + 1][1] > 0:
@@ -1462,10 +1461,10 @@ class Snake(GameObject):
                     color,
                     (((position[0][0] - position[1][0])
                             * min((jump + 1) / 6, 1)) + position[1][0],
-                     ((position[0][1] - position[1][1])
+                    ((position[0][1] - position[1][1])
                        * min((jump + 1) / 6, 1)) + position[1][1],
-                     GRID_SIZE - 1,
-                     GRID_SIZE - 1)
+                    GRID_SIZE - 1,
+                    GRID_SIZE - 1)
                 )
 
         # Increment animation stage.
@@ -1510,8 +1509,8 @@ class Particle(GameObject):
 
     def move_shrink(self):
         """Move the particle around the screen based on given velocity.
-           Make particle smaller, more time it lives - the smaller it gets."""
-
+        Make particle smaller, more time it lives - the smaller it gets.
+        """
         # Check if the particle is still alive.
         self.alive = max(1 - ((pygame.time.get_ticks() - self.timestamp)
                               / self.lifetime), 0)
@@ -1523,7 +1522,8 @@ class Particle(GameObject):
 
     def draw(self):
         """Draw a particle on the screen.
-           Update particle's position and size after it has been rendered."""
+        Update particle's position and size after it has been rendered.
+        """
         pygame.draw.rect(screen,
                          self.body_color,
                          (self.position.x,
@@ -1555,7 +1555,8 @@ class GameAnimation:
 
 class SearchLight:
     """Beam of light that goes from the head of the snake,
-       indicating path the snake will cover if the direction is unchanged."""
+    indicating path the snake will cover if the direction is unchanged.
+    """
 
     def __init__(self, snake):
         self.snake = snake
@@ -1563,7 +1564,6 @@ class SearchLight:
 
     def draw(self):
         """Draw searchlight on screen."""
-
         # Clear old positions from the list
         self.positions = []
 
@@ -1628,7 +1628,6 @@ class GameText:
 
     def draw(self, score):
         """Draw text and animations on screen."""
-
         # Creates pixel digits from string digits.
         bits = [Bit((point[0] + GRID_SIZE * 5 * i, point[1]),
                     color_set=[Colors.score],
@@ -1690,7 +1689,6 @@ class PauseText(MenuText):
 
     def draw(self, highlight, iter_counter):
         """Draw text and animations on screen."""
-
         # Contains main text that is always on screen
         bits = self.pause + self.resume + self.menu
 
@@ -1724,8 +1722,9 @@ class Pause(Menu):
 
     def hover(self, iter_counter, mouse):
         """Check if the mouse is above button in menu.
-           If so, display arrows around the button and
-           start animation on the button itself."""
+        If so, display arrows around the button and
+        start animation on the button itself.
+        """
         if self.resume_button.hover(mouse):
             self.logo.display_resume_arrows = True
             self.logo.start_animation(Text.resume, iter_counter, 15, mouse)
@@ -1772,7 +1771,6 @@ class OverText(MenuText):
 
     def draw(self, highlight, iter_counter):
         """Draw text and animations on screen."""
-
         # Contains main text that is always on screen
         bits = self.over + self.retry + self.menu
 
@@ -1806,8 +1804,9 @@ class Over(Menu):
 
     def hover(self, iter_counter, mouse):
         """Check if the mouse is above button in menu.
-           If so, display arrows around the button and
-           start animation on the button itself."""
+        If so, display arrows around the button and
+        start animation on the button itself.
+        """
         if self.retry_button.hover(mouse):
             self.logo.display_retry_arrows = True
             self.logo.start_animation(Text.retry, iter_counter, 15, mouse)
