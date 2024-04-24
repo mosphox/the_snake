@@ -1460,11 +1460,11 @@ class Snake(GameObject):
                     screen,
                     color,
                     (((position[0][0] - position[1][0])
-                            * min((jump + 1) / 6, 1)) + position[1][0],
-                    ((position[0][1] - position[1][1])
-                       * min((jump + 1) / 6, 1)) + position[1][1],
-                    GRID_SIZE - 1,
-                    GRID_SIZE - 1)
+                           * min((jump + 1) / 6, 1)) + position[1][0],
+                     ((position[0][1] - position[1][1])
+                      * min((jump + 1) / 6, 1)) + position[1][1],
+                     GRID_SIZE - 1,
+                     GRID_SIZE - 1)
                 )
 
         # Increment animation stage.
