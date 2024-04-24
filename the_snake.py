@@ -1372,8 +1372,8 @@ class Snake(GameObject):
                 if self.positions[0][1] + self.direction[1]
                 > SCREEN_HEIGHT - GRID_SIZE
                 else ((self.positions[0][0] + self.direction[0])
-                       % SCREEN_WIDTH,
-                       self.positions[0][1] + self.direction[1]))
+                      % SCREEN_WIDTH,
+                      self.positions[0][1] + self.direction[1]))
 
         # Update positions list. Keep last tile if the snake ate an apple.
         # Else remove it. (tile, not apple).
@@ -1881,6 +1881,8 @@ class Engine:
                 # Restart game, if retry was selected.
                 self.game = Game()
 
+        return False
+
     def handle_keys_keydown(self, event):
         """Just a method to make handle_keys less complex :)"""
         if event.key == pygame.K_ESCAPE:
@@ -1931,7 +1933,8 @@ class Engine:
                 raise SystemExit
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                self.handle_keys_mouse(mouse)
+                if self.handle_keys_mouse(mouse):
+                    return True
 
             if event.type == pygame.KEYDOWN:
                 self.handle_keys_keydown(event)
