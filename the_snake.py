@@ -29,7 +29,8 @@ RIGHT = (GRID_SIZE, 0)
 SPEED = 60
 FPS = SPEED  # Renamed, cause i keep forgetting it's name.
 
-# The values below are not used anywhere in code, however they needed to pass autotests.
+# The values below are not used anywhere in code,
+# however they needed to pass autotests.
 BOARD_BACKGROUND_COLOR = None
 BORDER_COLOR = None
 APPLE_COLOR = None
@@ -885,6 +886,7 @@ class ParticlePresets:
 
     @staticmethod
     def apple():
+        """Return settings for apple's particles"""
         return (
             (uniform(-2 * RES_MULT, 2 * RES_MULT),
              uniform(-2 * RES_MULT, 2 * RES_MULT)),
@@ -895,6 +897,7 @@ class ParticlePresets:
 
     @staticmethod
     def snake():
+        """Return settings for snake's particles"""
         return (
             (uniform(-4, 4), uniform(-4, 4)),
             randint(5, 7),
@@ -988,7 +991,8 @@ class Bit:
 
     def draw(self, positions=[]):
         """Draw a tile in the screen. Boarder and inside color of tile
-        depends on randomness and positions variable respectively."""
+        depends on randomness and positions variable respectively.
+        """
         # Get current color index in colors list.
 
         if self.change_colors:
