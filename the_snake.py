@@ -1369,11 +1369,11 @@ class Snake(GameObject):
                 if self.positions[0][1] + self.direction[1] < 7 * GRID_SIZE
                 else ((self.positions[0][0]
                        + self.direction[0]) % SCREEN_WIDTH, 7 * GRID_SIZE)
-        if self.positions[0][1] + self.direction[1]
-           > SCREEN_HEIGHT - GRID_SIZE
-        else ((self.positions[0][0] + self.direction[0])
-              % SCREEN_WIDTH,
-              self.positions[0][1] + self.direction[1]))
+                if self.positions[0][1] + self.direction[1]
+                > SCREEN_HEIGHT - GRID_SIZE
+                else ((self.positions[0][0] + self.direction[0])
+                       % SCREEN_WIDTH,
+                       self.positions[0][1] + self.direction[1]))
 
         # Update positions list. Keep last tile if the snake ate an apple.
         # Else remove it. (tile, not apple).
