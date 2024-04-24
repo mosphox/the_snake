@@ -1033,7 +1033,7 @@ class Bit:
                           self.point[1],
                           GRID_SIZE - 1,
                           GRID_SIZE - 1)
-                        )
+                         )
 
 
 class MenuAnimation:
@@ -1055,8 +1055,8 @@ class MenuAnimation:
         # Get proximity of all points in the object to mouse
         proximity = [(point,
                       sqrt((mouse[0] - point[0]) ** 2
-                           + (mouse[1] - point[1]) ** 2))
-                      for point in self.obj]
+                      + (mouse[1] - point[1]) ** 2))
+                     for point in self.obj]
 
         # Get closest point, from here the animation will start
         initial = min([point[1] for point in proximity])
