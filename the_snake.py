@@ -2087,7 +2087,7 @@ def main():
             break
 
         pygame.display.flip()
-        clock.tick(60)
+        clock.tick(FPS)
 
 
 if __name__ == '__main__':
