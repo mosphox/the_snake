@@ -1055,7 +1055,7 @@ class MenuAnimation:
         # Get proximity of all points in the object to mouse
         proximity = [(point,
                       sqrt((mouse[0] - point[0]) ** 2
-                      + (mouse[1] - point[1]) ** 2))
+                           + (mouse[1] - point[1]) ** 2))
                      for point in self.obj]
 
         # Get closest point, from here the animation will start
@@ -1201,8 +1201,9 @@ class MouseGlow:
             pygame.draw.rect(screen,
                              Colors.black,
                              (tile[0], tile[1],
-                             GRID_SIZE - 1, GRID_SIZE - 1)
+                              GRID_SIZE - 1, GRID_SIZE - 1)
                              )
+
 
 class Button:
     """Button. Invisible object on screen, defined as set of points."""
@@ -1212,8 +1213,8 @@ class Button:
 
     def hover(self, mouse):
         """Check if the mouse is over button"""
-        if (self.from_point[0] < mouse[0] < self.to_point[0] and
-            self.from_point[1] < mouse[1] < self.to_point[1]):
+        if (self.from_point[0] < mouse[0] < self.to_point[0]
+           and self.from_point[1] < mouse[1] < self.to_point[1]):
             return True
 
         return False
@@ -1232,8 +1233,9 @@ class Menu:
 
     def hover(self, iter_counter, mouse):
         """Check if the mouse is above button in menu.
-           If so, display arrows around the button and
-           start animation on the button itself."""
+        If so, display arrows around the button and
+        start animation on the button itself.
+        """
         if self.play_button.hover(mouse):
             self.logo.display_play_arrows = True
             self.logo.start_animation(Text.play, iter_counter, 15, mouse)
@@ -1276,7 +1278,8 @@ class Apple(GameObject):
     def randomize_position(self, snake_positions):
         """Get random position of new apple. Random position cannot be
         inside the snake. Choice is used here, as usual random will be
-        really inefficient as snake grows."""
+        really inefficient as snake grows.
+        """
         return choice([pos for pos in
                        [(x, y)
                         for x in range(0, SCREEN_WIDTH, GRID_SIZE)
