@@ -1890,24 +1890,23 @@ class Engine:
                 self.screen = 'pause'
                 self.pause.logo.stop_all()
 
-            if self.screen == 'pause':
+            elif self.screen == 'pause':
                 # Set game to active, if the game was unpaused.
                 self.game.active = True
                 self.screen = 'game'
 
+            else:
+                pass
+
         # Move the snake around.
         if event.key == pygame.K_w:
-            if self.screen == 'game':
-                self.game.snake.update_direction(UP)
+            self.game.snake.update_direction(UP)
         if event.key == pygame.K_s:
-            if self.screen == 'game':
-                self.game.snake.update_direction(DOWN)
+            self.game.snake.update_direction(DOWN)
         if event.key == pygame.K_d:
-            if self.screen == 'game':
-                self.game.snake.update_direction(RIGHT)
+            self.game.snake.update_direction(RIGHT)
         if event.key == pygame.K_a:
-            if self.screen == 'game':
-                self.game.snake.update_direction(LEFT)
+            self.game.snake.update_direction(LEFT)
 
         if event.key == pygame.K_SPACE:
             # Speed up the game when SPACE is pressed.
