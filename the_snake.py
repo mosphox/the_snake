@@ -1460,7 +1460,7 @@ class Snake(GameObject):
                     screen,
                     color,
                     (((position[0][0] - position[1][0])
-                           * min((jump + 1) / 6, 1)) + position[1][0],
+                      * min((jump + 1) / 6, 1)) + position[1][0],
                      ((position[0][1] - position[1][1])
                       * min((jump + 1) / 6, 1)) + position[1][1],
                      GRID_SIZE - 1,
@@ -1971,7 +1971,6 @@ class Engine:
 
     def render_game(self):
         """Render game screen"""
-
         # Move snake based on update_rate value if the game is active.
         if self.iter_counter % self.game.update_rate == 0 and self.game.active:
             # Update apple.
@@ -1982,7 +1981,7 @@ class Engine:
                 # If so, create particle animation for a new apple.
                 particles = [Particle(self.game.apple.position,
                                       ParticlePresets.apple())
-                                      for i in range(30)]
+                             for i in range(30)]
                 self.game.animation.third_layer += particles
 
             # Check if snake bit its own tail.
@@ -2026,6 +2025,7 @@ class Engine:
         self.game.animation.clean_up()
 
     def render_pause(self):
+        """Render pause screen."""
         mouse = pygame.mouse.get_pos()
 
         # Set game to inactive to stop position updates.
@@ -2042,6 +2042,7 @@ class Engine:
         self.pause.hover(self.iter_counter, mouse)
 
     def render_over(self):
+        """Render gameover screen."""
         mouse = pygame.mouse.get_pos()
 
         # Set game to inactive to stop position updates.
@@ -2059,6 +2060,7 @@ class Engine:
 
 
 def main():
+    """Main loop."""
     pygame.init()
     engine = Engine()
 
