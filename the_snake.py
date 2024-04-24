@@ -1889,7 +1889,6 @@ class Engine:
                 self.game.active = False
                 self.screen = 'pause'
                 self.pause.logo.stop_all()
-                continue
 
             if self.screen == 'pause':
                 # Set game to active, if the game was unpaused.
