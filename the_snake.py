@@ -1862,34 +1862,6 @@ class Engine:
                 pygame.quit()
                 raise SystemExit
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                # Get menu button clicks.
-                if self.screen == 'menu':
-                    self.screen = self.menu.click(mouse)
-
-                    if self.screen == 'game':
-                        # Restart game, if play in menu has been selected.
-                        self.game = Game()
-
-                    if self.screen == 'quit':
-                        # Return true, to exit main loop
-                        return True
-
-                if self.screen == 'pause':
-                    self.screen = self.pause.click(mouse)
-
-                    if self.screen == 'game':
-                        # Set game to active, if the game was unpaused.
-                        self.game.active = True
-
-                if self.screen == 'over':
-                    self.screen = self.over.click(mouse)
-
-                    if self.screen == 'game':
-                        self.over.logo.stop_all()
-                        # Restart game, if retry was selected.
-                        self.game = Game()
-
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     if self.screen == 'game':
