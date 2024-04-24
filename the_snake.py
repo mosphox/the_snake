@@ -1831,40 +1831,6 @@ class Over(Menu):
         if self.menu_button.hover(mouse):
             return self.change_mode('menu')
 
-def handle_keys(self):
-    """Get keys pressed and send actions to other game parts."""
-    mouse = pygame.mouse.get_pos()
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            # Exit immediately if window was closed.
-            pygame.quit()
-            raise SystemExit
-
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                pass
-
-            # Move the snake around.
-            if event.key == pygame.K_w:
-                self.game.snake.update_direction(UP)
-            if event.key == pygame.K_s:
-                self.game.snake.update_direction(DOWN)
-            if event.key == pygame.K_d:
-                self.game.snake.update_direction(RIGHT)
-            if event.key == pygame.K_a:
-                self.game.snake.update_direction(LEFT)
-
-            if event.key == pygame.K_SPACE:
-                # Speed up the game when SPACE is pressed.
-                self.game.update_rate = self.game.update_rate // 2
-
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_SPACE:
-                # Slow down the game when SPACE is released.
-                self.game.update_rate = self.game.update_rate * 2
-
-    return False
 
 class Engine:
     """Class to connect everything above into one game."""
@@ -1885,6 +1851,57 @@ class Engine:
         self.cover_score.set_alpha(128)
         self.cover_all.fill(Colors.black)
         self.cover_score.fill(Colors.black)
+
+    def handle_keys(self):
+        """Get keys pressed and send actions to other game parts."""
+        mouse = pygame.mouse.get_pos()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                # Exit immediately if window was closed.
+                pygame.quit()
+                raise SystemExit
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    if self.screen == 'game':
+                        # Set game to inactive, if the game was paused.
+                        self.game.active = False
+                        self.screen = 'pause'
+                        self.pause.logo.stop_all()
+                        continue
+
+                    if self.screen == 'pause':
+                        # Set game to active, if the game was unpaused.
+                        self.game.active = True
+                        self.screen = 'game'
+
+                # Move the snake around.
+                if event.key == pygame.K_w:
+                    if self.screen == 'game':
+                        self.game.snake.update_direction(UP)
+                if event.key == pygame.K_s:
+                    if self.screen == 'game':
+                        self.game.snake.update_direction(DOWN)
+                if event.key == pygame.K_d:
+                    if self.screen == 'game':
+                        self.game.snake.update_direction(RIGHT)
+                if event.key == pygame.K_a:
+                    if self.screen == 'game':
+                        self.game.snake.update_direction(LEFT)
+
+                if event.key == pygame.K_SPACE:
+                    # Speed up the game when SPACE is pressed.
+                    if self.screen == 'game':
+                        self.game.update_rate = self.game.update_rate // 2
+
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_SPACE:
+                    # Slow down the game when SPACE is released.
+                    if self.screen == 'game':
+                        self.game.update_rate = self.game.update_rate * 2
+
+        return False
 
     def render(self):
         """Select screen to render, based on current mode."""
