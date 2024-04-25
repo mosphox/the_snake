@@ -274,6 +274,7 @@ class MouseGlow:
 
 
 class Cover(pygame.Rect):
+    """Rect to cover end of the grid"""
     def __init__(self,
                  from_x=0,
                  from_y=0,
@@ -284,10 +285,13 @@ class Cover(pygame.Rect):
         super().__init__(from_x, from_y, size_x, size_y)
 
     def draw(self, screen):
+        """Draw rect"""
         pygame.draw.rect(screen, Colors.black, self)
 
 
 class ShadowCover(pygame.Surface):
+    """Transparent screen for pause or gameover menu"""
+
     def __init__(self, from_x, from_y, size_x, size_y):
         super().__init__((size_x, size_y))
         self.from_x = from_x
@@ -297,4 +301,5 @@ class ShadowCover(pygame.Surface):
         self.fill(Colors.black)
 
     def draw(self, screen):
+        """Draw screen"""
         screen.blit(self, (self.from_x, self.from_y))

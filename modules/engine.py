@@ -22,7 +22,7 @@ class Engine:
         self.over = Over()
 
     def handle_keys_mouse(self, mouse):
-        """None"""
+        """Just a method to make handle_keys less complex :)"""
         # Get menu button clicks.
         if self.screen_type == 'menu':
             self.screen_type = self.menu.click(mouse)

@@ -8,12 +8,15 @@ from modules.texts import MenuText, GameText, PauseText, OverText
 
 
 class Window:
+    """Any menu window"""
+
     WIN_ANIME_TIME = 15
 
     def __init__(self):
         self.mouseglow = MouseGlow()
 
     def hover(self, mouse, iter_counter):
+        """Check if the mouse is over a button"""
         if self.button_1.hover(mouse):
             self.tiles.display_arrows_1 = True
             self.tiles.start_animation(self.button_1.text,
@@ -35,6 +38,7 @@ class Window:
             self.tiles.stop_animation(self.button_2.text)
 
     def click(self, mouse):
+        """Check if a button was clicked"""
         if self.button_1.hover(mouse):
             return self.button_1.mode
 
