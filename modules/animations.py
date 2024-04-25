@@ -275,6 +275,7 @@ class MouseGlow:
 
 class Cover(pygame.Rect):
     """Rect to cover end of the grid"""
+
     def __init__(self,
                  from_x=0,
                  from_y=0,

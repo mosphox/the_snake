@@ -3,6 +3,8 @@ from modules.constants import PointText, GRID_SIZE, Colors
 
 
 class TextTiles:
+    """Tiles from which the texts are made"""
+
     def __init__(self):
         # Display arrows only when mouse is over button.
         # These values are changed by other classes.
