@@ -210,13 +210,13 @@ class Snake(GameObject):
                     # another moving outside from opposite side.
                     positions = [(self.positions[i],
                                   (SCREEN_WIDTH, self.positions[i][1])),
-                                 ((-20, self.positions[i][1]),
+                                 ((-GRID_SIZE, self.positions[i][1]),
                                   self.positions[i + 1])]
 
                 # If tile is moving outside right boarder:
                 else:
                     positions = [(self.positions[i],
-                                  (-20, self.positions[i][1])),
+                                  (-GRID_SIZE, self.positions[i][1])),
                                  ((SCREEN_WIDTH, self.positions[i][1]),
                                   self.positions[i + 1])]
 

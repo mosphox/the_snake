@@ -8,8 +8,5 @@ class Button:
 
     def hover(self, mouse):
         """Check if the mouse is over button"""
-        if (self.from_point[0] < mouse[0] < self.to_point[0]
-                and self.from_point[1] < mouse[1] < self.to_point[1]):
-            return True
-
-        return False
+        return (self.from_point[0] < mouse[0] < self.to_point[0]
+                and self.from_point[1] < mouse[1] < self.to_point[1])
