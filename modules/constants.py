@@ -3,7 +3,7 @@ from random import randint, uniform
 
 
 # Increase gamewindow size by n times.
-RES_MULT = 3
+RES_MULT = 1
 
 # The size of the window itself.
 SCREEN_WIDTH, SCREEN_HEIGHT = 720 * RES_MULT, 560 * RES_MULT
